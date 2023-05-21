@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datagovindia"
+version = "0.4"
+description = "Python API wrapper for Government of India Open Government Data (OGD) platform data.gov.in"
+readme = "README.md"
+authors = [
+  { name = "Aditya Karan Chhabra" },
+  { name = "Arijit Basu" }
+]
+maintainers = [
+  { name = "Abhishek Arora" },
+  { name = "Arijit Basu" }
+]
+license = { file = "LICENSE" }
+keywords = ["india", "government", "opendata", "ogd", "ogdindia", "datagovin"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Database",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+]
+dependencies = ["requests", "sqla-fancy-core", "typer", "tqdm"]
+
+[project.scripts]
+datagovindia = "datagovindia.__main__:main"
