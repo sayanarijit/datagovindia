@@ -67,38 +67,6 @@ def get_resource(
 
 
 @dataclass
-class RecordsStream:
-    index_name: str
-    offset: int
-    batch_size: int
-    api_key: str | None = None
-    filters: dict[str, str] | None = None
-    fields: list[str] | None = None
-    _results: list[dict] = field(default_factory=list)
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if not self._results:
-            self._results = get_resource(
-                index_name=self.index_name,
-                api_key=self.api_key,
-                offset=self.offset,
-                limit=self.batch_size,
-                filters=self.filters,
-                fields=self.fields,
-            )["records"]
-            self.offset += self.batch_size
-
-        if not self._results:
-            raise StopIteration
-
-        result = self._results.pop(0)
-        return result
-
-
-@dataclass
 class ResourceApi:
     resource: ResourceMetadata
     total: int
