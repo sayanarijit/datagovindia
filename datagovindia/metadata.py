@@ -221,8 +221,8 @@ def search(
     fields: list[str] | None = None,
 ) -> list[dict]:
     if not fields:
-        fields = ResourcesFTS.Table.columns.keys()
-    cols = [c for c in ResourcesFTS.Table.columns if c.name in fields]
+        fields = Resources.Table.columns.keys()
+    cols = [c for c in Resources.Table.columns if c.name in fields]
     where = []
 
     if title:
@@ -239,13 +239,19 @@ def search(
         where.append(ResourcesFTS.source.match(source))
 
     q = (
-        sa.select(*cols)
+        sa.select(ResourcesFTS.index_name)
         .where(sa.and_(*where))
         .order_by(ResourcesFTS.rank)
         .limit(max_results)
     )
 
+    ids = [r for r, in conn.execute(q).fetchall()]
+    if not ids:
+        return []
+
+    q = sa.select(*cols).where(Resources.index_name.in_(ids))
     results = conn.execute(q).fetchall()
+
     return [{f: r._mapping[f] for f in fields} for r in results]
 
 
