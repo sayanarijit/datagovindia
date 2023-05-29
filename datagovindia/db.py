@@ -26,7 +26,7 @@ class Resources:
     Table = tf("resources", meta)
 
 
-class ResourcesFTS(Resources):
+class ResourcesFTS:
     index_name = tf.string("index_name")
     title = tf.string("title")
     desc = tf.string("desc")
