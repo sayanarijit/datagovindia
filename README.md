@@ -4,6 +4,8 @@ A rewrite attempt of https://github.com/addypy/datagovindia
 
 ## Install
 
+**This library requires python>=3.10 compiled with sqlite>=3.34.**
+
 ```bash
 python -m venv .venv
 
