@@ -184,8 +184,8 @@ def list_recently_updated(
         .limit(max_results)
     )
 
-    results = conn.execute(q).fetchall()
-    return [{f: r._mapping[f] for f in fields} for r in results]
+    results = conn.execute(q).mappings()
+    return [{f: r[f] for f in fields} for r in results]
 
 
 def list_recently_created(
@@ -205,8 +205,8 @@ def list_recently_created(
         .limit(max_results)
     )
 
-    results = conn.execute(q).fetchall()
-    return [{f: r._mapping[f] for f in fields} for r in results]
+    results = conn.execute(q).mappings()
+    return [{f: r[f] for f in fields} for r in results]
 
 
 def search(
@@ -250,9 +250,9 @@ def search(
         return []
 
     q = sa.select(*cols).where(Resources.index_name.in_(ids))
-    results = conn.execute(q).fetchall()
+    results = conn.execute(q).mappings()
 
-    return [{f: r._mapping[f] for f in fields} for r in results]
+    return [{f: r[f] for f in fields} for r in results]
 
 
 def get_resource_info(
