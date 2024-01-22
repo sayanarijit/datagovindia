@@ -5,7 +5,6 @@ from datagovindia.config import DATAGOVINDIA_CACHE_DIR
 
 path = DATAGOVINDIA_CACHE_DIR / "metadata.db"
 
-meta = sa.MetaData()
 engine = sa.create_engine(f"sqlite:///{path}")
 
 tf = TableFactory()
@@ -23,7 +22,7 @@ class Resources:
     created = tf.datetime("created")
     updated = tf.datetime("updated")
 
-    Table = tf("resources", meta)
+    Table = tf("resources")
 
 
 class ResourcesFTS:
@@ -38,12 +37,12 @@ class ResourcesFTS:
 
     rank = sa.text("rank")  # Hidden column for MATCH operation
 
-    Table = tf("resources_fts", meta)
+    Table = tf("resources_fts")
 
 
 def drop_all():
-    meta.drop_all(engine)
+    tf.metadata.drop_all(engine)
 
 
 def create_all():
-    meta.create_all(engine)
+    tf.metadata.create_all(engine)
